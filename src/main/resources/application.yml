@@ -1,0 +1,108 @@
+spring:
+  kafka:
+    bootstrap-servers: 172.16.3.32:9092
+    consumer:
+      group-id: platform-admin
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+      max-poll-records: 50
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    listener:
+      missing-topics-fatal: false
+      ack-mode: manual
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 12MB
+  redis:
+    database: 2
+    host: 172.16.3.32
+    password: 8STRYXLCtn8
+    port: 6379
+    enable: true
+    timeout: 10000
+  datasource:
+    dynamic:
+      druid:
+        initial-size: 3
+        max-active: 10
+        min-idle: 1
+        max-wait: 60000
+        validation-query: SELECT 'x'
+        test-while-idle: true
+        test-on-borrow: true
+      primary: master
+      strict: false
+      datasource:
+        master:
+          url: jdbc:mysql://172.16.3.32:3306/platform_admin?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+          username: secure
+          password: 8STRYXLCtn8
+          driver-class-name: com.mysql.cj.jdbc.Driver
+mybatis-plus:
+  mapperLocations: classpath*:/mapper/*.xml
+  configuration:
+    mapUnderscoreToCamelCase: true
+common:
+  data:
+    type: mysql
+    dir: db/${common.data.type}
+    enable: true
+    init:
+      enable: true
+  crypto:
+    type: AES
+    key: eWxtZkRseFhLcm04Skc0OWdGYlUwUT09
+
+# EventBus 配置
+vtc:
+  asset-security:
+    eventbus:
+      enabled: true
+      transport: kafka
+      app-name: ${spring.application.name}
+      domain: open-platform
+      kafka:
+        bootstrap-servers: ${spring.kafka.bootstrap-servers}
+      outbox:
+        storage: jdbc  # 可选值: memory, jdbc
+      inbox:
+        storage: jdbc  # 可选值: memory, jdbc
+      dlq:
+        enabled: true
+        topic-suffix: .DLQ
+        storage: jdbc  # 可选值: memory, jdbc
+      telemetry:
+        enabled: false
+    eventbus-admin:
+      enabled: true
+
+# platform-admin 自身配置
+platform-admin:
+  invocation:
+    enabled: true
+  webhook:
+    enabled: true
+    max-retry: 10
+    retry-backoff: 60,300,900,1800,3600,7200
+  eventcenter:
+    enabled: true
+  admin:
+    # 内网管理 API 鉴权密钥，请求头 X-Internal-Admin-Key 须与此一致；生产环境务必修改
+    api-key: dev-internal-admin-key-change-in-prod
+
+# Knife4j 文档
+knife4j:
+  enable: true
+  production: false
+  setting:
+    language: zh-CN
+
+logging:
+  level:
+    com.vtc.platformadmin: debug

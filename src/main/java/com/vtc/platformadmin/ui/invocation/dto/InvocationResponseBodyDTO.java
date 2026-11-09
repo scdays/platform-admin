@@ -1,0 +1,25 @@
+package com.vtc.platformadmin.ui.invocation.dto;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+
+@Data
+@ApiModel("InvocationResponseBodyDTO")
+public class InvocationResponseBodyDTO {
+
+    @ApiModelProperty("调用记录 ID")
+    private String invocationId;
+
+    @ApiModelProperty("requestId")
+    private String requestId;
+
+    @ApiModelProperty("响应体字节数（UTF-8 字符串长度近似）")
+    private Long byteSize;
+
+    @ApiModelProperty("是否来自持久化完整响应体（false 表示摘要重建）")
+    private Boolean stored;
+
+    @ApiModelProperty("格式化后的 Response Body JSON")
+    private String bodyFormatted;
+}

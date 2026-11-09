@@ -1,0 +1,56 @@
+# ==========================
+# Maven
+# ==========================
+target/
+*.jar
+*.war
+*.zip
+*.tar
+*.tar.gz
+
+# ==========================
+# Eclipse / STS
+# ==========================
+.myeclipse/
+.settings/
+.project
+.classpath
+.apt_generated/
+
+# ==========================
+# IntelliJ IDEA
+# ==========================
+.idea/
+*.ipr
+*.iml
+*.iws
+
+# ==========================
+# Maven Wrapper
+# ==========================
+.mvn/
+mvnw
+mvnw.cmd
+
+# ==========================
+# 日志 / 临时文件
+# ==========================
+logs/
+*.log
+*.cache
+*.diff
+*.patch
+*.tmp
+rebel.xml
+
+# ==========================
+# 系统文件
+# ==========================
+.DS_Store
+Thumbs.db
+
+# ==========================
+# 本地敏感配置（按需启用）
+# ==========================
+src/main/resources/bootstrap.yml
+# src/main/resources/applicationyml

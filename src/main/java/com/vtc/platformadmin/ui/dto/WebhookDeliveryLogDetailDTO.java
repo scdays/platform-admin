@@ -1,0 +1,53 @@
+package com.vtc.platformadmin.ui.dto;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+import java.util.List;
+
+@Data
+@EqualsAndHashCode(callSuper = true)
+@ApiModel("WebhookDeliveryLogDetailDTO")
+public class WebhookDeliveryLogDetailDTO extends WebhookDeliveryLogDTO {
+
+    @ApiModelProperty("事件载荷 JSON")
+    private String payloadJson;
+
+    @ApiModelProperty("格式化后的事件 JSON")
+    private String payloadJsonFormatted;
+
+    @ApiModelProperty("重试历史（自动/手动）")
+    private List<WebhookDeliveryRetryHistoryDto> retryHistory;
+
+    @ApiModelProperty("同资源关联的 Open API 调用记录")
+    private List<RelatedInvocationDto> relatedInvocations;
+
+    @ApiModelProperty("重试次数（含首次投递）")
+    private int attemptCount;
+
+    @Data
+    @ApiModel("WebhookRelatedInvocationDto")
+    public static class RelatedInvocationDto {
+        private String invocationId;
+        private String operationId;
+        private String resourceType;
+        private String resourceId;
+        private Integer responseCode;
+        private String startedAt;
+    }
+
+    @Data
+    @ApiModel("WebhookDeliveryRetryHistoryDto")
+    public static class WebhookDeliveryRetryHistoryDto {
+        private Long id;
+        private Integer retryCount;
+        private Integer httpStatus;
+        private String status;
+        private String createdAt;
+        private boolean manualRetry;
+        private String triggerSource;
+        private String triggerSourceLabel;
+    }
+}
